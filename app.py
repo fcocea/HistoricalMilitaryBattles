@@ -7,6 +7,7 @@ from dash.exceptions import PreventUpdate
 from conflicts import df_results, conflicts, countries
 from dash.dependencies import Input, Output
 import plotly.graph_objects as go
+import os
 
 stylesheets = [
     "https://unpkg.com/@mantine/dates@7/styles.css",
@@ -136,4 +137,5 @@ def update_graph(selected_country):
     return fig, pie_fig
 
 if __name__ == '__main__':
+    os.environ['REACT_VERSION'] = '18.2.0'
     app.run(debug=True)
