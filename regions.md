@@ -1,0 +1,99 @@
+- [ ] Spanish Flanders
+- [ ] Bohemia
+- [ ] Palatinate
+- [ ] Anhalt
+- [ ] Brunswick
+- [ ] Saxony
+- [ ] Bavaria
+- [ ] Franconia
+- [ ] Brandenburg
+- [ ] France
+- [ ] Wuerttemberg
+- [ ] Swabia
+- [ ] England
+- [ ] Scotland
+- [ ] Spanish Netherlands
+- [ ] Hungary
+- [ ] Austria
+- [ ] Poland
+- [ ] Germany
+- [ ] Netherlands
+- [ ] Ireland
+- [ ] Piedmont
+- [ ] Russia
+- [ ] Kingdom Of Hungary
+- [ ] Silesia
+- [ ] Austrian Netherlands
+- [ ] Bengal
+- [ ] Honaover
+- [ ] Westphalia
+- [ ] Prussia
+- [ ] Rhineland
+- [ ] Canada
+- [ ] Massachusetts
+- [ ] New York
+- [ ] New Jersey
+- [ ] Pennsylvania
+- [ ] South Carolina
+- [ ] North Carolina
+- [ ] North Italy
+- [ ] Egypt
+- [ ] Palestine
+- [ ] Switzerland
+- [ ] Moravia
+- [ ] Portugal
+- [ ] Spain
+- [ ] Hesse
+- [ ] Belgium
+- [ ] Louisiana
+- [ ] Columbia
+- [ ] Venezuela
+- [ ] Quito
+- [ ] Peru
+- [ ] Texas
+- [ ] Mexico
+- [ ] The Crimea
+- [ ] Lombardy
+- [ ] Venetia
+- [ ] Virginia
+- [ ] Missouri
+- [ ] Kentucky
+- [ ] Tennessee
+- [ ] Maryland
+- [ ] Mississippi
+- [ ] Georgia
+- [ ] Alabama
+- [ ] Zululand
+- [ ] Transvaal
+- [ ] The Sudan
+- [ ] Ethiopia
+- [ ] South Africa
+- [ ] Cuba
+- [ ] Korea
+- [ ] Manchuria
+- [ ] European Turkey
+- [ ] Ussr
+- [ ] Finland
+- [ ] Germany And France
+- [ ] Russian Poland
+- [ ] Austrian Galicia
+- [ ] Serbia
+- [ ] Germany And Russian Poland
+- [ ] Turkey
+- [ ] Mesopotamia
+- [ ] Austria And Italy
+- [ ] Tunisia
+- [ ] Italy
+- [ ] Luxembourg
+- [ ] Malaya
+- [ ] Japan
+- [ ] Okinawa
+- [ ] Jordan
+- [ ] Syria
+- [ ] Soviet Union
+- [ ] Golan
+- [ ] Lebanon
+- [ ] Sinai
+- [ ] Viet Nam
+- [ ] West Bank
+- [ ] Northwest Europe
