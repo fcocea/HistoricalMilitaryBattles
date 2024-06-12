@@ -55,7 +55,55 @@ def get_layout():
             ], direction="column", gap="sm",
         ),
         dmc.Flex([
-            dcc.Graph(id='graph'),
-            dcc.Graph(id='pie-chart')
-        ], direction={"base": "column", "sm": "row"}, w="100%", gap="lg", justify="space-between"),
+            dmc.Card([
+                dmc.CardSection(
+                    dmc.Group(
+                        children=[
+                            dmc.Text(
+                                "Conflictos que involucran a USA", fw=500, id='graph-title'),
+                            dmc.ActionIcon(
+                                DashIconify(
+                                    icon="carbon:overflow-menu-horizontal"),
+                                color="gray",
+                                variant="transparent",
+                            ),
+                        ],
+                        justify="space-between",
+                    ),
+                    withBorder=True,
+                    inheritPadding=True,
+                    py="xs",
+                ),
+                dcc.Graph(id='graph', config={'displayModeBar': False})
+            ], withBorder=True,
+                shadow="sm",
+                radius="md",
+                w="100%"
+            ),
+            dmc.Card([
+                dmc.CardSection(
+                    dmc.Group(
+                        children=[
+                            dmc.Text(
+                                "Conflictos que involucran a USA", fw=500, id='pie-chart-title'),
+                            dmc.ActionIcon(
+                                DashIconify(
+                                    icon="carbon:overflow-menu-horizontal"),
+                                color="gray",
+                                variant="transparent",
+                            ),
+                        ],
+                        justify="space-between",
+                    ),
+                    withBorder=True,
+                    inheritPadding=True,
+                    py="xs",
+                ),
+                dcc.Graph(id='pie-chart', config={'displayModeBar': False})
+            ], withBorder=True,
+                shadow="sm",
+                radius="md",
+                w="100%"
+            ),
+        ], direction={"base": "column", "md": "row"}, w="100%", gap="lg", justify="space-between"),
     ], gap="lg", direction="column"))
