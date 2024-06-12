@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 
 from dash_manager import app
-from dash import html, dcc, Output, Input
+from dash import  Output, Input
 
 battles = pd.read_csv('data/battles_clean.csv')
 conflicts = battles[['isqno', 'attacker', 'defender']]

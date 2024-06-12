@@ -14,7 +14,7 @@ def get_layout():
     ], className="title-container"),
 
     html.Div([
-        dcc.Graph(id='historical_map', responsive=True)
+        dcc.Graph(id='historical_map')
     ], className="map-container"),
 
     html.Div(
@@ -38,10 +38,11 @@ def get_layout():
         data=countries,
         searchable=True,
         value='USA',
+        allowDeselect=False,
     ),
     dmc.Flex([
-        dcc.Graph(id='graph',responsive=True),
-        dcc.Graph(id='pie-chart', responsive=True)
+        dcc.Graph(id='graph'),
+        dcc.Graph(id='pie-chart')
     ], direction={"base": "column", "sm": "row"}, w={"base": "100%", "sm": "100%"}, gap="lg")
 ]))
 
