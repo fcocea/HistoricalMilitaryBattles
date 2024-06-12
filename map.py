@@ -1,15 +1,14 @@
 import plotly.express as px
 from dash_manager import app
-from dash import dcc, Output, Input, State
+from dash import Output, Input, State
 import pandas as pd
+from dash.exceptions import PreventUpdate
 
 
-df = pd.read_csv('https://gist.githubusercontent.com/shinokada/f01139d3a024de375ede23cec5d52360/raw/424ac0055ed71a04e6f45badfaef73df96ad0aad/CrimeStatebyState_1960-2014.csv')
-df = df[(df['State'] != 'District of Columbia')]
-
-_years = df['Year'].unique()
-_years.sort()
-_years = _years.tolist()
+df = pd.read_csv('data/battles_clean.csv')
+_years = df['date_start']
+_years = _years.apply(lambda x: int(x.split('-')[0]))
+_years = _years.unique().tolist()
 
 
 @app.callback(
@@ -18,53 +17,34 @@ _years = _years.tolist()
 )
 def get_map(state):
     current_year = state['current_year']
-    df_year = df[df['Year'] ==
-                 current_year] if current_year is not None else df[df['Year'] == _years[0]]
-    map_fig = px.choropleth(df_year,
-                            locations='State_code',
-                            color="Murder_per100000",
-                            color_continuous_scale="Inferno",
-                            locationmode='USA-states',
-                            scope="usa",
-                            range_color=(0, 20),
-                            title='Crime by State',
-                            height=600,
-                            )
-    return [map_fig, f"Año {current_year}"]
+    # df_year = df[df['Year'] ==
+    #              current_year] if current_year is not None else df[df['Year'] == _years[0]]
+    historical_map = px.choropleth()
+    historical_map.update_geos(projection_type="natural earth")
+    historical_map.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    historical_map.update_layout(dragmode=False)
 
-
-app.clientside_callback(
-    """
-    function(n_clicks, current_state) {
-        var graphDiv = document.querySelector('#historical_map').children[1];
-        var new_state = current_state.state === 'paused' ? 'playing' : 'paused';
-
-        if (new_state === 'playing') {
-            return ["radix-icons:pause", {
-                'state': new_state,
-                'current_year': current_state['current_year']
-            }];
-        } else {
-
-            return ["radix-icons:play", {
-                'state': new_state,
-                'current_year': current_state['current_year']
-            }];
-        }
-    }
-    """,
-    [Output('button_icon', 'icon'),
-     Output('animation_state', 'data')],
-    [Input('button_toggle', 'n_clicks'), State('animation_state', 'data')],
-    prevent_initial_call=True
-)
+    return [historical_map, f"Año {current_year}" if current_year is not None else None]
 
 
 @app.callback(
-    Output('animation_state', 'data', allow_duplicate=True),
-    [Input('interval', 'n_intervals')],
-    [State('animation_state', 'data')],
+    [Output('button_icon', 'icon'),
+     Output('animation_state', 'data', allow_duplicate=True), Output('interval-map', 'disabled')],
+    [Input('button_toggle', 'n_clicks'), State('animation_state', 'data')],
     prevent_initial_call=True
+)
+def toggle_play_pause(n_clicks, current_state):
+    return ["radix-icons:play" if current_state['state'] == 'playing' else "radix-icons:pause", {
+        'state': 'paused' if current_state['state'] == 'playing' else 'playing',
+        'current_year': current_state['current_year']
+    }, True if current_state['state'] == 'playing' else False]
+
+
+@app.callback(
+    Output('animation_state', 'data'),
+    [Input('interval-map', 'n_intervals')],
+    [State('animation_state', 'data')],
+    prevent_initial_call=False
 )
 def update_current_year(n_intervals, animation_state):
     if animation_state['state'] == 'playing':
@@ -75,4 +55,6 @@ def update_current_year(n_intervals, animation_state):
             current_year = _years[_years.index(current_year) + 1]
         return {'state': 'playing', 'current_year': current_year}
     else:
-        return animation_state
+        if animation_state['current_year'] is None:
+            return {'state': 'paused', 'current_year': _years[0]}
+        raise PreventUpdate
