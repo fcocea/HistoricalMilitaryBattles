@@ -2,6 +2,7 @@ from dash import html, dcc, Output, Input
 import dash_mantine_components as dmc
 from dash_manager import app
 from conflicts import countries
+from map import get_map
 
 __years = [{"value": year, "label": year} for year in range(1600, 1974, 50)] + [{"value": 1973, "label": 1973}]
 
@@ -11,6 +12,11 @@ def get_layout():
         dmc.Title("Batallas militares históricas", order=1),
         dmc.Text("Condiciones y resultados de más de 600 batallas libradas entre 1600 y 1973 d.C.", size="sm"),
     ], className="title-container"),
+
+    html.Div([
+        dcc.Graph(id='historical_map', responsive=True)
+    ], className="map-container"),
+
     html.Div(
     [
        dmc.RangeSlider(
