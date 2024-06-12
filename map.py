@@ -12,5 +12,7 @@ def get_map(selected_years):
     historical_map = px.choropleth()
     historical_map.update_geos(projection_type="natural earth")
     historical_map.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    historical_map.update_layout(dragmode=False)
+
 
     return [historical_map]

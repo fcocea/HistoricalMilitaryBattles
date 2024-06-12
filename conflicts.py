@@ -124,7 +124,7 @@ def update_graph(selected_country):
     )])
     pie_fig.update_layout(
         title=f'Porcentaje de Resultados de Batallas para {selected_country}',
-        legend=dict(orientation='h', yanchor='bottom', y=1, xanchor='right', x=0.5)
+        legend=dict(orientation='h', yanchor='bottom', y=1, xanchor='right', x=0.66),
     )
     pie_fig.update_layout({
         'plot_bgcolor': 'rgba(0, 0, 0, 0)',

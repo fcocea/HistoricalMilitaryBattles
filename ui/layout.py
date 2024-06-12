@@ -14,7 +14,8 @@ def get_layout():
     ], className="title-container"),
 
     html.Div([
-        dcc.Graph(id='historical_map')
+        dcc.Graph(id='historical_map',
+                  config={'displayModeBar': False}),
     ], className="map-container"),
 
     html.Div(
