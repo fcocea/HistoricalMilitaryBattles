@@ -2,7 +2,8 @@ from dash import html, dcc, Output, Input
 import dash_mantine_components as dmc
 from dash_manager import app
 from conflicts import countries
-from map import get_map
+import map
+import deaths
 
 __years = [{"value": year, "label": year} for year in range(1600, 1974, 50)] + [{"value": 1973, "label": 1973}]
 
@@ -44,7 +45,10 @@ def get_layout():
     dmc.Flex([
         dcc.Graph(id='graph'),
         dcc.Graph(id='pie-chart')
-    ], direction={"base": "column", "sm": "row"}, w={"base": "100%", "sm": "100%"}, gap="lg")
+    ], direction={"base": "column", "sm": "row"}, w={"base": "100%", "sm": "100%"}, gap="lg"),
+    html.Div([
+        dcc.Graph(id='boxplot_deaths')
+    ])
 ]))
 
 
