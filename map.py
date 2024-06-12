@@ -1,3 +1,4 @@
+import json
 import plotly.express as px
 from dash_manager import app
 from dash import Output, Input, State
@@ -5,10 +6,19 @@ import pandas as pd
 from dash.exceptions import PreventUpdate
 
 
-df = pd.read_csv('data/battles_clean.csv')
+df = pd.read_csv('data/battles_clean.csv')[['locn', 'date_start']]
+
 _years = df['date_start']
 _years = _years.apply(lambda x: int(x.split('-')[0]))
 _years = _years.unique().tolist()
+
+df['year'] = df['date_start'].apply(lambda x: int(x.split('-')[0]))
+df = df.groupby(['locn', 'year']).size().reset_index(name='count')
+df['locn'] = df['locn'].apply(lambda x: x.title())
+locn = df['locn'].unique().tolist()
+
+with open('data/geo/concat.geojson') as f:
+    geojson_data = json.load(f)
 
 
 @app.callback(
@@ -17,9 +27,11 @@ _years = _years.unique().tolist()
 )
 def get_map(state):
     current_year = state['current_year']
-    # df_year = df[df['Year'] ==
-    #              current_year] if current_year is not None else df[df['Year'] == _years[0]]
-    historical_map = px.choropleth()
+    print(current_year)
+    df_year = df[df['year'] ==
+                 current_year] if current_year is not None else df[df['Year'] == _years[0]]
+    historical_map = px.choropleth(
+        df, geojson=geojson_data, locations='locn', featureidkey="properties.name", animation_frame='year',)
     historical_map.update_geos(projection_type="natural earth")
     historical_map.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     historical_map.update_layout(dragmode=False)

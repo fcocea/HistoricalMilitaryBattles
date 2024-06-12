@@ -55,7 +55,14 @@ found = []
 for country in countries:
     for feature in data['features']:
         if feature['properties']['ISO_A3'] == country['code']:
-            new_data['features'].append(feature)
+            new_data['features'].append({
+                "type": "Feature",
+                "properties": {
+                    "name": country['name']
+                },
+                "geometry": feature['geometry']
+
+            })
             found.append(country['name'])
             break
 

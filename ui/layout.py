@@ -19,8 +19,7 @@ def get_layout():
         ], className="title-container"),
         dmc.Divider(variant="solid", id="map-divider"),
         dmc.Flex([
-            dcc.Graph(id='historical_map', animate=True, animation_options={
-                      'frame': {'redraw': True}}, config={'displayModeBar': False}, ),
+            dcc.Graph(id='historical_map', animate=True, config={'displayModeBar': False}, ),
             dmc.Flex([
                 dmc.ActionIcon(
                     DashIconify(
