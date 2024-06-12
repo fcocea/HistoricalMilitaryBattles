@@ -3,6 +3,8 @@ import dash_mantine_components as dmc
 from conflicts import countries
 from dash_iconify import DashIconify
 import map
+import deaths
+import troops
 
 __years = [{"value": year, "label": year}
            for year in range(1600, 1974, 50)] + [{"value": 1973, "label": 1973}]
@@ -106,4 +108,57 @@ def get_layout():
                 w="100%"
             ),
         ], direction={"base": "column", "md": "row"}, w="100%", gap="lg", justify="space-between"),
+        dmc.Flex([
+            dmc.Card([
+                dmc.CardSection(
+                    dmc.Group(
+                        children=[
+                            dmc.Text(
+                                "Distribución de las muertes en batalla que involucran a USA", fw=500, id='boxplot-deaths-title'),
+                            dmc.ActionIcon(
+                                DashIconify(
+                                    icon="carbon:overflow-menu-horizontal"),
+                                color="gray",
+                                variant="transparent",
+                            ),
+                        ],
+                        justify="space-between",
+                    ),
+                    withBorder=True,
+                    inheritPadding=True,
+                    py="xs",
+                ),
+                dcc.Graph(id='boxplot_deaths', config={
+                          'displayModeBar': False})
+            ], withBorder=True,
+                shadow="sm",
+                radius="md",
+                w="100%"
+            ),
+            dmc.Card([
+                dmc.CardSection(
+                    dmc.Group(
+                        children=[
+                            dmc.Text(
+                                "Waffle Chart de USA", fw=500, id='battle-troops-title'),
+                            dmc.ActionIcon(
+                                DashIconify(
+                                    icon="carbon:overflow-menu-horizontal"),
+                                color="gray",
+                                variant="transparent",
+                            ),
+                        ],
+                        justify="space-between",
+                    ),
+                    withBorder=True,
+                    inheritPadding=True,
+                    py="xs",
+                ),
+                dcc.Graph(id='battle-troops', config={'displayModeBar': False})
+            ], withBorder=True,
+                shadow="sm",
+                radius="md",
+                w="100%"
+            ),
+        ], direction={"base": "column", "md": "row"}, w="100%", gap="lg", justify="space-between")
     ], gap="lg", direction="column"))
