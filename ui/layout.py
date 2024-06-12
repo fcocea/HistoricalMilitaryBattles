@@ -22,10 +22,10 @@ def get_layout():
             dcc.Graph(id='historical_map', animate=True, animation_options={
                       'frame': {'redraw': True}}, config={'displayModeBar': False}, ),
             dmc.Flex([
-                dmc.Button(
-                    DashIconify(width=24,
-                                icon="radix-icons:play", id="button_icon"),
-                    size="xs",
+                dmc.ActionIcon(
+                    DashIconify(
+                        icon="radix-icons:play", id="button_icon"),
+                    size="lg",
                     id="button_toggle"
                 ),
                 dcc.Store(id='animation_state', data={
