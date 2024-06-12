@@ -87,7 +87,9 @@ def update_graph(selected_country):
         x=list(defense_data.values()),
         name='Defiende',
         marker_color='blue',
-        orientation='h'
+        orientation='h',
+        text=[-1 * x if x != 0 else None for x in defense_data.values()],
+        textposition="outside"
     ))
     fig.add_trace(go.Bar(
         y=list(attack_data.keys()),
@@ -95,7 +97,9 @@ def update_graph(selected_country):
         name='Ataca',
         marker_color='red',
         orientation='h',
-        yaxis='y2'
+        yaxis='y2',
+        text=[x if x != 0 else None for x in attack_data.values()],
+        textposition="outside"
     ))
     fig.update_layout(
         # title=f'Conflictos que involucran a {selected_country}',
@@ -115,6 +119,7 @@ def update_graph(selected_country):
         'plot_bgcolor': 'rgba(0, 0, 0, 0)',
         'paper_bgcolor': 'rgba(0, 0, 0, 0)',
     })
+    fig.update_traces(hoverinfo='skip')
 
     df_selected = df_results[df_results['country'] == selected_country]
     pie_fig = go.Figure(data=[go.Pie(
@@ -127,6 +132,8 @@ def update_graph(selected_country):
         textfont=dict(color='white'),
         hoverlabel=dict(font=dict(color='white'))
     )])
+    # remove hover
+    pie_fig.update_traces(hoverinfo='skip')
     pie_fig.update_layout(
         margin=dict(l=20, r=20, t=20, b=20),
         # title=f'Porcentaje de Resultados de Batallas para {selected_country}',

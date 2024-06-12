@@ -29,15 +29,15 @@ def boxplot_deaths(selected_country):
     fig = px.box(deaths_country, x=selected_country,
                  orientation='h', labels={selected_country: 'Muertes'})
     fig.update_layout(margin=dict(l=20, r=20, t=20, b=20))
+
     fig.update_xaxes(showgrid=False, showline=False)
     fig.update_yaxes(showgrid=False, showline=False)
 
     fig.update_yaxes(title_text=selected_country)
-
-    # background transparent
+    fig.update_traces(hoverinfo='none')
     fig.update_layout({
         'plot_bgcolor': 'rgba(0, 0, 0, 0)',
         'paper_bgcolor': 'rgba(0, 0, 0, 0)',
     })
-
+    fig.update_layout(hovermode=False)
     return [fig, f"Distribución de las muertes en batalla que involucran a {selected_country}"]
