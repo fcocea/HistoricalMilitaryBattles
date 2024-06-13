@@ -16,10 +16,19 @@ def get_layout():
             dmc.Title("Batallas militares históricas", order=1),
             dmc.Text(
                 "Condiciones y resultados de más de 600 batallas libradas entre 1600 y 1973 d.C.", size="sm"),
+            html.Img(src="assets/soldadito.png",
+                     width=100, height=150, id="soldier", className='soldier hidden')
         ], className="title-container"),
         dmc.Divider(variant="solid", id="map-divider"),
         dmc.Flex([
-            dcc.Graph(id='historical_map', animate=True, config={'displayModeBar': False}, ),
+            html.Img(src="assets/explosion.gif", width=200, height=200, id="bomb-1", style={
+                'position': 'absolute', 'top': '0', 'z-index': '100'}, className="hidden"
+            ),
+            html.Img(src="assets/explosion.gif", width=200, height=200, id="bomb-2", style={
+                'position': 'absolute', 'top': '0', "right": '0', 'z-index': '100'}, className="hidden"
+            ),
+            dcc.Graph(id='historical_map', animate=True, animation_options={
+                      'frame': {'redraw': True}}, config={'displayModeBar': False}, ),
             dmc.Flex([
                 dmc.ActionIcon(
                     DashIconify(
@@ -32,7 +41,7 @@ def get_layout():
                 dcc.Interval(id='interval-map', interval=1000,
                              n_intervals=0, disabled=True)
             ], justify="center", gap="xs"),
-        ], direction="column", gap="lg"),
+        ], direction="column", gap="lg", pos="relative"),
         dmc.Divider(variant="solid"),
         dmc.Flex(
             [

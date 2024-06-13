@@ -2,4 +2,16 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+.soldier {
+    position: absolute;
+    top: 0;
+    right: 30%;
+    z-index: 20;
 }
