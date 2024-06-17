@@ -5,6 +5,7 @@ from dash_iconify import DashIconify
 import map
 import deaths
 import troops
+import opponent
 
 __years = [{"value": year, "label": year}
            for year in range(1600, 1974, 50)] + [{"value": 1973, "label": 1973}]
@@ -55,14 +56,30 @@ def get_layout():
                     labelAlwaysOn=True,
                     value=[1600, 1973]
                 ),
-                dmc.Select(
-                    id='country-dropdown',
-                    data=countries,
-                    searchable=True,
-                    value='USA',
-                    allowDeselect=False,
-                ),
-            ], direction="column", gap="sm",
+                dmc.Flex(
+                    [
+                        dmc.Select(
+                            id='country-dropdown',
+                            data=countries,
+                            searchable=True,
+                            value='USA',
+                            allowDeselect=False,
+                            w="100%",
+                            label="País",
+
+                        ),
+                        dmc.Select(
+                            id='contrincante-dropdown',
+                            disabled=True,
+                            searchable=True,
+                            clearable=True,
+                            placeholder="Seleccione un contrincante para analizar",
+                            w="100%",
+                            label="Contrincante"
+                        ),
+                    ], direction={"base": "column", "md": "row"}, gap={"base": "xs", "md": "lg"}
+                )
+            ], direction="column", gap="sm", w="100%"
         ),
         dmc.Flex([
             dmc.Card([
