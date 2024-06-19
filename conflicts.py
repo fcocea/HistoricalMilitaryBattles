@@ -47,19 +47,6 @@ for index, row in df_results.iterrows():
     df_results.loc[df_results['country'] == country, 'lost'] = lost
     df_results.loc[df_results['country'] == country, 'draws'] = draws
 
-# calcular porcentaje de victorias , derrote y empates
-df_results['total'] = df_results['won'] + \
-    df_results['lost'] + df_results['draws']
-df_results['won_percentage'] = df_results['won'] / df_results['total']
-df_results['lost_percentage'] = df_results['lost'] / df_results['total']
-df_results['draws_percentage'] = df_results['draws'] / df_results['total']
-
-# multiplicar por 100 y aproximar a 2 decimales
-df_results['won_percentage'] = df_results['won_percentage'] * 100
-df_results['lost_percentage'] = df_results['lost_percentage'] * 100
-df_results['draws_percentage'] = df_results['draws_percentage'] * 100
-
-
 @app.callback(
     [Output('graph', 'figure'),
      Output('pie-chart', 'figure'), Output('graph-title', 'children'), Output('pie-chart-title', 'children')],
@@ -67,7 +54,6 @@ df_results['draws_percentage'] = df_results['draws_percentage'] * 100
      Input('contrincante-dropdown', 'value')]
 )
 def update_graph(selected_country, selected_contrincante=None):
-    print(selected_country, selected_contrincante)
     if selected_contrincante is None:
         # Gráfico de barras para ataques y defensas
         df_attacks = conflicts[conflicts['defender'] == selected_country]
@@ -167,32 +153,40 @@ def update_graph(selected_country, selected_contrincante=None):
                 df_conflicts.at[index, 'country_winner'] = row['defender']
             else:
                 df_conflicts.at[index, 'country_winner'] = 'draw'
+            
+        
         conflict_count = df_conflicts['attacker'].value_counts().to_frame().reset_index()
         conflict_count.columns = ['country', 'attacker_count']
         conflict_count = conflict_count.sort_values(by='attacker_count', ascending=False)
-        conflict_count
         attacks_count = conflict_count[conflict_count['country'] == country1]
         defends_count = conflict_count[conflict_count['country'] == country2]
-        attack_data = {country2: attacks_count['attacker_count'].values[0]}
-        defense_data = {country2: -defends_count['attacker_count'].values[0]}
+        try:
+            attack_data2 = {country2: attacks_count['attacker_count'].values[0]}
+        except:
+            attack_data2 = {country2: 0}
+        try:
+            defense_data2 = {country2: -defends_count['attacker_count'].values[0]}
+        except:
+            defense_data2 = {country2: 0}
+
         fig = go.Figure()
         fig.add_trace(go.Bar(
-            y=list(defense_data.keys()),
-            x=list(defense_data.values()),
+            y=list(defense_data2.keys()),
+            x=list(defense_data2.values()),
             name='Defiende',
             marker_color='blue',
             orientation='h',
-            text=[-1 * x if x != 0 else None for x in defense_data.values()],
+            text=[-1 * x if x != 0 else None for x in defense_data2.values()],
             textposition="outside"
         ))
         fig.add_trace(go.Bar(
-            y=list(attack_data.keys()),
-            x=list(attack_data.values()),
+            y=list(attack_data2.keys()),
+            x=list(attack_data2.values()),
             name='Ataca',
             marker_color='red',
             orientation='h',
             yaxis='y2',
-            text=[x if x != 0 else None for x in attack_data.values()],
+            text=[x if x != 0 else None for x in attack_data2.values()],
             textposition="outside"
         ))
         fig.update_layout(
@@ -215,9 +209,14 @@ def update_graph(selected_country, selected_contrincante=None):
         })
         wins = df_conflicts.groupby(['country_winner']).size().reset_index(name='wins')
         wins = wins.rename(columns={'country_winner': 'country'})
-        win_data = {country1: wins[wins['country'] == country1]['wins'].values[0]}
-        lose_data = {country2: wins[wins['country'] == country2]['wins'].values[0]}
-        # si es que tiene empates (no siempre esta esta fila)
+        try:
+            win_data = {country1: wins[wins['country'] == country1]['wins'].values[0]}
+        except:
+            win_data = {country1: 0}
+        try:
+            lose_data = {country2: wins[wins['country'] == country2]['wins'].values[0]}
+        except:
+            lose_data = {country2: 0}
         if 'draw' in wins['country'].values:
             draw_data = {'draw': wins[wins['country'] == 'draw']['wins'].values[0]}
         else:
@@ -243,4 +242,4 @@ def update_graph(selected_country, selected_contrincante=None):
             'plot_bgcolor': 'rgba(0, 0, 0, 0)',
             'paper_bgcolor': 'rgba(0, 0, 0, 0)',
         })
-        return [fig, pie_fig, f'Conflictos que involucran a {country1}', f'Porcentaje de Resultados de Batallas para {country1}']
+        return [fig, pie_fig, f'Conflictos que involucran a {selected_country} contra {selected_contrincante}', f'Porcentaje de Resultados de Batallas para {selected_country} contra {selected_contrincante}']
