@@ -17,19 +17,11 @@ def get_layout():
             dmc.Title("Batallas militares históricas", order=1),
             dmc.Text(
                 "Condiciones y resultados de más de 600 batallas libradas entre 1600 y 1973 d.C.", size="sm"),
-            html.Img(src="assets/soldadito.png",
-                     width=100, height=150, id="soldier", className='soldier hidden')
         ], className="title-container"),
         dmc.Divider(variant="solid", id="map-divider"),
         dmc.Flex([
-            html.Img(src="assets/explosion.gif", width=200, height=200, id="bomb-1", style={
-                'position': 'absolute', 'top': '0', 'z-index': '100'}, className="hidden"
-            ),
-            html.Img(src="assets/explosion.gif", width=200, height=200, id="bomb-2", style={
-                'position': 'absolute', 'top': '0', "right": '0', 'z-index': '100'}, className="hidden"
-            ),
             dcc.Graph(id='historical_map', animate=True, animation_options={
-                      'frame': {'redraw': True}}, config={'displayModeBar': False}, ),
+                      'frame': {'redraw': True}}, config={'displayModeBar': False}, style={'height': '650px'}),
             dmc.Flex([
                 dmc.ActionIcon(
                     DashIconify(

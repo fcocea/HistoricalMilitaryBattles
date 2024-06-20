@@ -1,0 +1,835 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Venetia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.3388, 45.4343]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Japan"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [138.2529, 36.2048]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Germany"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.4515, 51.1657]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Russian Poland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [21.0122, 52.2297]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.2433, 38.9637]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jordan"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [36.2384, 30.5852]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-74.2973, 4.5709]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austria"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.3333, 47.5162]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Italy"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.5674, 41.8719]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Serbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [21.0059, 44.0165]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Peru"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-75.0152, -9.19]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Quito"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-78.4678, -0.1807]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Venezuela"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-66.5897, 6.4238]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pennsylvania"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-77.1945, 41.2033]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Louisiana"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-91.9623, 30.9843]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Soviet Union"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [37.6184, 55.7512]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Portugal"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-8.2245, 39.3999]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Syria"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [38.9968, 34.8021]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kingdom of Hungary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.5033, 47.1625]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "South Africa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [22.9375, -30.5595]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tunisia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.5375, 33.8869]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hungary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.5033, 47.1625]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Russia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [105.3188, 61.524]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Spanish Netherlands"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.4699, 50.5039]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Belgium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.4699, 50.5039]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Massachusetts"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-71.3824, 42.4072]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Moravia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17.25, 49.5]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Northwest Europe"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.4699, 50.5039]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Saxony"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.7373, 51.1045]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Poland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.1451, 51.9194]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Crimea"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.1055, 45.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sinai"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.655, 30.3189]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "North Carolina"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.0193, 35.7596]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Russian Poland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [21.0122, 52.2297]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lombardy"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.1829, 45.4668]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Prussia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.405, 52.52]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Luxembourg"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.1296, 49.8153]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kentucky"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-84.27, 37.8393]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ireland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-8.2439, 53.1424]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austrian Galicia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [24.0297, 49.8397]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Scotland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.1883, 56.4907]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Switzerland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8.2275, 46.8182]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Transvaal"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [28.358, -25.7479]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "USSR"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [37.6184, 55.7512]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Korea"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [127.7669, 35.9078]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Manchuria"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [123.9873, 47.0]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Maryland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-76.6413, 39.0458]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "New York"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-74.006, 40.7128]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Georgia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-82.9071, 32.1656]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austrian Netherlands"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.4699, 50.5039]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Spain"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.7492, 40.4637]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Germany and France"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.4515, 51.1657]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Austria"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.3333, 47.5162]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bavaria"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.4979, 48.7904]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Canada"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-106.3468, 56.1304]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Virginia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-78.6569, 37.4316]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "New Jersey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-74.4057, 40.0583]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Texas"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-99.9018, 31.9686]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "North Italy"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.19, 45.4642]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Missouri"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-91.8318, 37.9643]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Malaya"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [101.9758, 4.2105]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mexico"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-102.5528, 23.6345]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mississippi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-89.3985, 32.3547]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Alabama"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-86.9023, 32.3182]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Germany"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.4515, 51.1657]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cuba"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-77.7812, 21.5218]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tennessee"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-86.5804, 35.5175]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rhineland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.8638, 50.7753]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lebanon"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.8623, 33.8547]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "France"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.2137, 46.6034]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Westphalia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.5861, 51.4325]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Palestine"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.2332, 31.9474]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Silesia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [18.5296, 51.2792]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bohemia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.4179, 49.8175]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Italy"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.5674, 41.8719]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "European Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [26.8206, 41.0082]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Egypt"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.8025, 26.8206]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Okinawa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [127.7669, 26.3344]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "West Bank"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.3027, 31.9474]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mesopotamia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [43.685, 33.2232]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Golan"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.7494, 32.9944]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "South Carolina"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-81.1637, 33.8361]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hanover"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.732, 52.3759]
+      }
+    }
+  ]
+}
