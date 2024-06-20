@@ -62,7 +62,7 @@ def get_layout():
                             id='country-dropdown',
                             data=countries,
                             searchable=True,
-                            value='USA',
+                            value='Alemania',
                             allowDeselect=False,
                             w="100%",
                             label="País",
@@ -88,7 +88,7 @@ def get_layout():
                         dmc.Group(
                             children=[
                                 dmc.Text(
-                                    "Conflictos que involucran a USA", fw=500, id='graph-title'),
+                                    "Conflictos que involucran a Alemania", fw=500, id='graph-title'),
                                 dmc.ActionIcon(
                                     DashIconify(
                                         icon="carbon:overflow-menu-horizontal"),
@@ -120,7 +120,7 @@ def get_layout():
                         dmc.Group(
                             children=[
                                 dmc.Text(
-                                    "Conflictos que involucran a USA", fw=500, id='pie-chart-title'),
+                                    "Conflictos que involucran a Alemania", fw=500, id='pie-chart-title'),
                                 dmc.ActionIcon(
                                     DashIconify(
                                         icon="carbon:overflow-menu-horizontal"),
@@ -153,7 +153,7 @@ def get_layout():
                     dmc.Group(
                         children=[
                             dmc.Text(
-                                "Distribución de las muertes en batalla que involucran a USA", fw=500, id='boxplot-deaths-title'),
+                                "Distribución de las muertes en batalla que involucran a Alemania", fw=500, id='boxplot-deaths-title'),
                             dmc.ActionIcon(
                                 DashIconify(
                                     icon="carbon:overflow-menu-horizontal"),
@@ -179,7 +179,7 @@ def get_layout():
                     dmc.Group(
                         children=[
                             dmc.Text(
-                                "Waffle Chart de USA", fw=500, id='battle-troops-title'),
+                                "Waffle Chart de Alemania", fw=500, id='battle-troops-title'),
                             dmc.ActionIcon(
                                 DashIconify(
                                     icon="carbon:overflow-menu-horizontal"),

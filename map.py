@@ -49,7 +49,6 @@ geojson = gdf.set_geometry('geometry').__geo_interface__
 )
 def get_map(state):
     current_year = state['current_year']
-    print(current_year)
     df_year = gdf[gdf['year'] ==
                   current_year] if current_year is not None else df[df['Year'] == _years[0]]
     historical_map = px.choropleth(
