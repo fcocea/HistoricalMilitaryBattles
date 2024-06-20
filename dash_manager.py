@@ -7,5 +7,5 @@ stylesheets = [
     "https://unpkg.com/@mantine/notifications@7/styles.css",
     "https://unpkg.com/@mantine/nprogress@7/styles.css",
 ]
-app = Dash(__name__, external_stylesheets=stylesheets)
-app.title = "Historical Battles"
+app = Dash('Batallas militares históricas', external_stylesheets=stylesheets)
+app.title = "Batallas militares históricas"
