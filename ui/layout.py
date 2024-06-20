@@ -100,7 +100,8 @@ def get_layout():
                         ),
                         dmc.Group(
                             children=[
-                                dmc.Text("Subtitulo",fw=400, id='graph-subtitle'),
+                                dmc.Text(None, fw=400,
+                                         id='graph-subtitle'),
                             ],
                         ),
                     ],
@@ -120,7 +121,7 @@ def get_layout():
                         dmc.Group(
                             children=[
                                 dmc.Text(
-                                    "Conflictos que involucran a Alemania", fw=500, id='pie-chart-title'),
+                                    "Resultados de Batallas para Alemania", fw=500, id='pie-chart-title'),
                                 dmc.ActionIcon(
                                     DashIconify(
                                         icon="carbon:overflow-menu-horizontal"),
@@ -132,7 +133,8 @@ def get_layout():
                         ),
                         dmc.Group(
                             children=[
-                                dmc.Text("Subtitulo pie chart",fw=400, id='pie-chart-subtitle'),
+                                dmc.Text(None, fw=400,
+                                         id='pie-chart-subtitle'),
                             ],
                         ),
                     ],
@@ -140,7 +142,8 @@ def get_layout():
                     inheritPadding=True,
                     py="xs",
                 ),
-                dcc.Graph(id='pie-chart', config={'displayModeBar': False})
+                dcc.Graph(
+                    id='pie-chart', config={'displayModeBar': False}, style={'marginTop': 'auto', 'marginBottom': 'auto'})
             ], withBorder=True,
                 shadow="sm",
                 radius="md",
