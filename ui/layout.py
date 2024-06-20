@@ -84,19 +84,26 @@ def get_layout():
         dmc.Flex([
             dmc.Card([
                 dmc.CardSection(
-                    dmc.Group(
-                        children=[
-                            dmc.Text(
-                                "Conflictos que involucran a USA", fw=500, id='graph-title'),
-                            dmc.ActionIcon(
-                                DashIconify(
-                                    icon="carbon:overflow-menu-horizontal"),
-                                color="gray",
-                                variant="transparent",
-                            ),
-                        ],
-                        justify="space-between",
-                    ),
+                    children=[
+                        dmc.Group(
+                            children=[
+                                dmc.Text(
+                                    "Conflictos que involucran a USA", fw=500, id='graph-title'),
+                                dmc.ActionIcon(
+                                    DashIconify(
+                                        icon="carbon:overflow-menu-horizontal"),
+                                    color="gray",
+                                    variant="transparent",
+                                ),
+                            ],
+                            justify="space-between",
+                        ),
+                        dmc.Group(
+                            children=[
+                                dmc.Text("Subtitulo",fw=400, id='graph-subtitle'),
+                            ],
+                        ),
+                    ],
                     withBorder=True,
                     inheritPadding=True,
                     py="xs",
@@ -109,19 +116,26 @@ def get_layout():
             ),
             dmc.Card([
                 dmc.CardSection(
-                    dmc.Group(
-                        children=[
-                            dmc.Text(
-                                "Conflictos que involucran a USA", fw=500, id='pie-chart-title'),
-                            dmc.ActionIcon(
-                                DashIconify(
-                                    icon="carbon:overflow-menu-horizontal"),
-                                color="gray",
-                                variant="transparent",
-                            ),
-                        ],
-                        justify="space-between",
-                    ),
+                    children=[
+                        dmc.Group(
+                            children=[
+                                dmc.Text(
+                                    "Conflictos que involucran a USA", fw=500, id='pie-chart-title'),
+                                dmc.ActionIcon(
+                                    DashIconify(
+                                        icon="carbon:overflow-menu-horizontal"),
+                                    color="gray",
+                                    variant="transparent",
+                                ),
+                            ],
+                            justify="space-between",
+                        ),
+                        dmc.Group(
+                            children=[
+                                dmc.Text("Subtitulo pie chart",fw=400, id='pie-chart-subtitle'),
+                            ],
+                        ),
+                    ],
                     withBorder=True,
                     inheritPadding=True,
                     py="xs",
@@ -130,7 +144,7 @@ def get_layout():
             ], withBorder=True,
                 shadow="sm",
                 radius="md",
-                w="100%"
+                w="100%",
             ),
         ], direction={"base": "column", "md": "row"}, w="100%", gap="lg", justify="space-between"),
         dmc.Flex([

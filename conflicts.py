@@ -49,11 +49,16 @@ for index, row in df_results.iterrows():
 
 @app.callback(
     [Output('graph', 'figure'),
-     Output('pie-chart', 'figure'), Output('graph-title', 'children'), Output('pie-chart-title', 'children')],
+     Output('pie-chart', 'figure'), 
+     Output('graph-title', 'children'), 
+     Output('pie-chart-title', 'children'),
+     Output('graph-subtitle','children'),
+     Output('pie-chart-subtitle','children')],
     [Input('country-dropdown', 'value'),
      Input('contrincante-dropdown', 'value')]
 )
 def update_graph(selected_country, selected_contrincante=None):
+    colors = ['#3399FF','#DC143C','#808080']
     if selected_contrincante is None:
         # Gráfico de barras para ataques y defensas
         df_attacks = conflicts[conflicts['defender'] == selected_country]
@@ -75,7 +80,7 @@ def update_graph(selected_country, selected_contrincante=None):
             y=list(defense_data.keys()),
             x=list(defense_data.values()),
             name='Defiende',
-            marker_color='blue',
+            marker_color=colors[0],
             orientation='h',
             text=[-1 * x if x != 0 else None for x in defense_data.values()],
             textposition="outside"
@@ -84,7 +89,7 @@ def update_graph(selected_country, selected_contrincante=None):
             y=list(attack_data.keys()),
             x=list(attack_data.values()),
             name='Ataca',
-            marker_color='red',
+            marker_color=colors[1],
             orientation='h',
             yaxis='y2',
             text=[x if x != 0 else None for x in attack_data.values()],
@@ -112,12 +117,16 @@ def update_graph(selected_country, selected_contrincante=None):
 
         df_selected = df_results[df_results['country'] == selected_country]
         pie_fig = go.Figure(data=[go.Pie(
-            labels=['Ganadas', 'Perdidas', 'Empatadas'],
+            labels=[
+                f'Ganadas: {df_selected['won'].values[0]}', 
+                f'Perdidas: {df_selected['lost'].values[0]}', 
+                f'Empatadas: {df_selected['draws'].values[0]}'
+            ],
             values=[df_selected['won'].values[0],
                     df_selected['lost'].values[0], df_selected['draws'].values[0]],
             hole=.4,
             hoverinfo='label+percent',
-            marker=dict(colors=['red', 'blue', 'gray']),
+            marker=dict(colors=colors),
             textfont=dict(color='white'),
             hoverlabel=dict(font=dict(color='white'))
         )])
@@ -125,16 +134,19 @@ def update_graph(selected_country, selected_contrincante=None):
         pie_fig.update_traces(hoverinfo='skip')
         pie_fig.update_layout(
             margin=dict(l=20, r=20, t=20, b=20),
-            # title=f'Porcentaje de Resultados de Batallas para {selected_country}',
             legend=dict(orientation='h', yanchor='bottom',
-                        y=1, xanchor='right', x=0.66),
+                        y=1.02, xanchor='center', x=0.5),
         )
         pie_fig.update_layout({
             'plot_bgcolor': 'rgba(0, 0, 0, 0)',
             'paper_bgcolor': 'rgba(0, 0, 0, 0)',
         })
 
-        return [fig, pie_fig, f'Conflictos que involucran a {selected_country}', f'Porcentaje de Resultados de Batallas para {selected_country}']
+        fig_title = f'Conflictos que involucran a {selected_country}'
+        pie_title = f'Resultados de Batallas para {selected_country}'
+        fig_subtitle = f'Se muestra las batallas en las que {selected_country} ha estado involucrado. El color azul representa el número de veces que {selected_country} se defendió de ataques de otros países, mientras que el color rojo indica las ocasiones en que atacó a esos países.'
+        pie_subtitle = f''
+        return [fig, pie_fig, fig_title, pie_title,fig_subtitle,pie_subtitle]
     else:
         battles = pd.read_csv('data/battles_clean.csv')
         df_conflicts = battles[['isqno', 'attacker', 'defender','winner']]
@@ -174,7 +186,7 @@ def update_graph(selected_country, selected_contrincante=None):
             y=list(defense_data2.keys()),
             x=list(defense_data2.values()),
             name='Defiende',
-            marker_color='blue',
+            marker_color=colors[0],
             orientation='h',
             text=[-1 * x if x != 0 else None for x in defense_data2.values()],
             textposition="outside"
@@ -183,14 +195,13 @@ def update_graph(selected_country, selected_contrincante=None):
             y=list(attack_data2.keys()),
             x=list(attack_data2.values()),
             name='Ataca',
-            marker_color='red',
+            marker_color=colors[1],
             orientation='h',
             yaxis='y2',
             text=[x if x != 0 else None for x in attack_data2.values()],
             textposition="outside"
         ))
         fig.update_layout(
-            # title=f'Conflictos que involucran a {selected_country}',
             xaxis_title='Número de batallas',
             yaxis_title='Defiende',
             yaxis2=dict(
@@ -221,25 +232,32 @@ def update_graph(selected_country, selected_contrincante=None):
             draw_data = {'draw': wins[wins['country'] == 'draw']['wins'].values[0]}
         else:
             draw_data = {'draw': 0}
+
         pie_fig = go.Figure(data=[go.Pie(
-            labels=['Ganadas', 'Perdidas', 'Empatadas'],
+            labels=[
+                f'Ganadas: {win_data[country1]}', 
+                f'Perdidas: {lose_data[country2]}', 
+                f'Empatadas: {draw_data["draw"]}'
+            ],
             values=[win_data[country1], lose_data[country2], draw_data['draw']],
             hole=.4,
             hoverinfo='label+percent',
-            marker=dict(colors=['red', 'blue', 'gray']),
+            marker=dict(colors=colors),
             textfont=dict(color='white'),
             hoverlabel=dict(font=dict(color='white'))
         )])
-        # remove hover
         pie_fig.update_traces(hoverinfo='skip')
         pie_fig.update_layout(
             margin=dict(l=20, r=20, t=20, b=20),
-            # title=f'Porcentaje de Resultados de Batallas para {selected_country}',
             legend=dict(orientation='h', yanchor='bottom',
-                        y=1, xanchor='right', x=0.66),
+                        y=1.02, xanchor='center', x=0.5),
         )
         pie_fig.update_layout({
             'plot_bgcolor': 'rgba(0, 0, 0, 0)',
             'paper_bgcolor': 'rgba(0, 0, 0, 0)',
         })
-        return [fig, pie_fig, f'Conflictos que involucran a {selected_country} contra {selected_contrincante}', f'Porcentaje de Resultados de Batallas para {selected_country} contra {selected_contrincante}']
+        fig_title = f'Conflictos que involucran a {selected_country} contra {selected_contrincante}'
+        pie_title = f'Resultados de Batallas para {selected_country} contra {selected_contrincante}'
+        fig_subtitle = f'Se muestra las batallas en las que {selected_country} ha estado involucrado contra {selected_contrincante}. El color azul representa el número de veces que {selected_country} se defendió de ataques de {selected_contrincante}, mientras que el color rojo indica las ocasiones en que lo atacó.'
+        pie_subtitle = f''
+        return [fig,pie_fig,fig_title,pie_title,fig_subtitle,pie_subtitle]
