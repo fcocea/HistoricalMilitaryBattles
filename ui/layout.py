@@ -20,8 +20,16 @@ def get_layout():
         ], className="title-container"),
         dmc.Divider(variant="solid", id="map-divider"),
         dmc.Flex([
-            dcc.Graph(id='historical_map', animate=True, animation_options={
-                      'frame': {'redraw': True}}, config={'displayModeBar': False}, style={'height': '650px'}),
+            dmc.Flex([
+                dcc.Graph(id='historical_map', animate=True, animation_options={
+                    'frame': {'redraw': True}}, config={'displayModeBar': False}, style={'width': '100%', "height": "650px"}),
+                dmc.Divider(orientation="vertical", style={
+                            "height": "650px", 'margin-left': 'auto'}),
+                dmc.Flex([
+                    dmc.Text("Año 1600", id="map-year", size="sm"),
+                ], direction="column", gap="xs", w="30%")
+
+            ], w="100%", gap="lg"),
             dmc.Flex([
                 dmc.ActionIcon(
                     DashIconify(

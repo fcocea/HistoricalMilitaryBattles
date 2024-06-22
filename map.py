@@ -40,9 +40,6 @@ _years.sort()
 # gdf['geometry'] = gdf['geometry'].apply(orient, args=(-1,))
 # geojson = gdf.set_geometry('geometry').__geo_interface__
 
-# px.set_mapbox_access_token(
-#     "")
-
 
 gdf = gpd.read_file('data/geo/geoPoints.geojson')
 gdf = gdf.rename(columns={'name': 'locn'})
@@ -67,39 +64,28 @@ def get_map(state):
     # df_year = gdf
     df_year = gdf[gdf['year'] ==
                   current_year] if current_year is not None else df[df['Year'] == _years[0]]
-    # historical_map = px.choropleth(
-    #     df_year, geojson=geojson, locations='locn', featureidkey="properties.locn", color='count')
-    # historical_map.update_geos(projection_type="natural earth")
-    # historical_map.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-    # historical_map.update_layout(dragmode=False)
-    # historical_map.update_layout(coloraxis_showscale=False)
+    fig = go.Figure(go.Scattermapbox(
+        lat=df_year['lat'],
+        lon=df_year['lon'],
+        mode='markers',
+        marker=go.scattermapbox.Marker(
+            size=10,
+            color='gray',
+            symbol="marker",
+            allowoverlap=True
+        ),
+    ))
 
-    fig = px.scatter_geo(df)
-    fig.update_geos(projection_type="natural earth")
-    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-    fig.update_layout(dragmode=False)
-    fig.update_layout(coloraxis_showscale=False)
-    fig.add_traces(
-        go.Scattergeo(
-            lon=df_year['lon'],
-            lat=df_year['lat'],
-            mode='text',
-            text='🚩',
-            textposition='top center',
-            textfont=dict(
-                size=24,
-            ),
-            showlegend=False
-        )
+    fig.update_layout(
+        dragmode=False,
+        mapbox=dict(
+            accesstoken="pk.eyJ1IjoiZmNvY2VhIiwiYSI6ImNsZ250dzh0bTA2MHkzZ3FtNzhvbGptdmoifQ.BOpVSmp0vR-SovUo7Q_NAw",
+            zoom=1.3,
+            center=dict(lat=22, lon=16),
+        ),
+        showlegend=False
     )
-
-    # fig = px.scatter_mapbox(
-    #     df_year, lat=df_year['lat'], lon=df_year['lon'], zoom=1)
-    # fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-    # fig.update_traces(marker={"size": 12, "symbol": "marker"})
-
-    fig.update_layout(height=650)
-
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     return [fig, f"Año {current_year}" if current_year is not None else None]
 
 
