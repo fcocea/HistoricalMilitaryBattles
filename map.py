@@ -50,9 +50,18 @@ gdf['date_start'] = pd.to_datetime(gdf['date_start'])
 gdf['year'] = gdf['date_start'].dt.year
 gdf['lon'] = gdf['geometry'].apply(lambda x: x.x)
 gdf['lat'] = gdf['geometry'].apply(lambda x: x.y)
-gdf = gdf.groupby(['locn', 'year']).agg(
+
+gdf = gdf.groupby(['locn', 'year', 'attacker', 'defender']).agg(
     {'isqno': 'count', 'lon': 'first', 'lat': 'first'}).reset_index()
 gdf = gdf.rename(columns={'isqno': 'count'})
+gdf['attacker'] = gdf[['attacker', 'defender']].apply(
+    lambda x: ' vs '.join(sorted(x)), axis=1)
+gdf = gdf.drop(columns='defender')
+gdf = gdf.groupby(['locn', 'year', 'attacker']).agg(
+    {'count': 'sum', 'lon': 'first', 'lat': 'first'}).reset_index()
+
+# cambiar nombre columna attacker
+gdf = gdf.rename(columns={'attacker': 'attacker_defender'})
 
 
 @app.callback(
@@ -61,18 +70,20 @@ gdf = gdf.rename(columns={'isqno': 'count'})
 )
 def get_map(state):
     current_year = state['current_year']
-    # df_year = gdf
+    df_year = gdf
     df_year = gdf[gdf['year'] ==
                   current_year] if current_year is not None else df[df['Year'] == _years[0]]
     fig = go.Figure(go.Scattermapbox(
         lat=df_year['lat'],
         lon=df_year['lon'],
         mode='markers',
+        hoverinfo='text',
+        hovertext=df_year['attacker_defender'] + '<br>' + 'Número de batallas: '+ df_year['count'].astype(str),
         marker=go.scattermapbox.Marker(
-            size=10,
-            color='gray',
+            size=10, # df_year['count'],
+            color='white',
             symbol="marker",
-            allowoverlap=True
+            allowoverlap=True,
         ),
     ))
 
@@ -83,7 +94,7 @@ def get_map(state):
             zoom=1.3,
             center=dict(lat=22, lon=16),
         ),
-        showlegend=False
+        showlegend=False,
     )
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     return [fig, f"Año {current_year}" if current_year is not None else None]

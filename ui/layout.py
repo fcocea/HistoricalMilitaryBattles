@@ -22,7 +22,7 @@ def get_layout():
         dmc.Flex([
             dmc.Flex([
                 dcc.Graph(id='historical_map', animate=True, animation_options={
-                    'frame': {'redraw': True}}, config={'displayModeBar': False}, style={'width': '100%', "height": "650px"}),
+                    'frame': {'redraw': True}}, config={'displayModeBar': False, 'scrollZoom': False}, style={'width': '100%', "height": "650px"}),
                 dmc.Divider(orientation="vertical", style={
                             "height": "650px", 'margin-left': 'auto'}),
                 dmc.Flex([
