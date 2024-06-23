@@ -19,7 +19,7 @@ countries = np.unique(countries)
 )
 def update_battle_troops(selected_country):
     isAttacker = False
-    if (troops['attacker'] == selected_country):
+    if (troops['attacker'].any() == selected_country):
         isAttacker = True
     filtered_troops = troops[(troops['attacker'] == selected_country) | (
         troops['defender'] == selected_country)].copy()
