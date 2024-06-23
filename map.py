@@ -1,7 +1,4 @@
-from shapely.ops import orient
 import geopandas as gpd
-import json
-import plotly.express as px
 from dash_manager import app
 from dash import Output, Input, State
 import pandas as pd
@@ -15,62 +12,54 @@ _years = _years.apply(lambda x: int(x.split('-')[0]))
 _years = _years.unique().tolist()
 _years.sort()
 
-
-# # Load the data
-# gdf = gpd.read_file('data/geo/concat_simply.geojson')
-# gdf = gdf[['name', 'geometry']]
-# df = df[['isqno', 'locn', 'date_start']]
-
-# # Merge gdf by name and df by locn
-# gdf = gdf.rename(columns={'name': 'locn'})
-# gdf['locn'] = gdf['locn'].str.lower()
-# df['locn'] = df['locn'].str.lower()
-
-# gdf = gdf.merge(df, on='locn')
-
-# # Convert date_start to year
-# gdf = gdf.drop(columns=['date_start'])
-
-# # Group by location and year, count isqno, and keep the geometry
-# gdf = gdf.groupby(['locn', 'year']).agg(
-#     {'isqno': 'count', 'geometry': 'first'}).reset_index()
-# gdf = gdf.rename(columns={'isqno': 'count'})
-
-# gdf = gdf.sort_values(by=['year'])
-# gdf['geometry'] = gdf['geometry'].apply(orient, args=(-1,))
-# geojson = gdf.set_geometry('geometry').__geo_interface__
-
-
 gdf = gpd.read_file('data/geo/geoPoints.geojson')
 gdf = gdf.rename(columns={'name': 'locn'})
-gdf['locn'] = gdf['locn'].str.lower()
-df['locn'] = df['locn'].str.lower()
+gdf['locn'] = gdf['locn'].str.title()
+df['locn'] = df['locn'].str.title()
 gdf = gdf.merge(df, on='locn')
 gdf['date_start'] = pd.to_datetime(gdf['date_start'])
 gdf['year'] = gdf['date_start'].dt.year
 gdf['lon'] = gdf['geometry'].apply(lambda x: x.x)
 gdf['lat'] = gdf['geometry'].apply(lambda x: x.y)
 
-gdf = gdf.groupby(['locn', 'year', 'attacker', 'defender']).agg(
-    {'isqno': 'count', 'lon': 'first', 'lat': 'first'}).reset_index()
-gdf = gdf.rename(columns={'isqno': 'count'})
-gdf['attacker'] = gdf[['attacker', 'defender']].apply(
-    lambda x: ' vs '.join(sorted(x)), axis=1)
-gdf = gdf.drop(columns='defender')
-gdf = gdf.groupby(['locn', 'year', 'attacker']).agg(
-    {'count': 'sum', 'lon': 'first', 'lat': 'first'}).reset_index()
+gdf['war'] = gdf['war'].apply(lambda x: x.title().replace("'S", "'s"))
+gdf['name'] = gdf['name'].apply(lambda x: x.title())
 
-# cambiar nombre columna attacker
-gdf = gdf.rename(columns={'attacker': 'attacker_defender'})
+gdf = gdf.groupby(['locn', 'year']).agg(
+    {'isqno': 'count', 'lon': 'first', 'lat': 'first', 'name': list, 'war': list, 'winner': list, 'attacker': list, 'defender': list}).reset_index()
+gdf = gdf.rename(columns={'isqno': 'count'})
+gdf['attacker_defender'] = gdf['attacker'].str[0] + \
+    ' vs ' + gdf['defender'].str[0]
+# apply title to war and name
+
+
+def get_battles(row):
+    battles = {}
+    for i in range(len(row['name'])):
+        if row['war'][i] not in battles:
+            battles[row['war'][i]] = []
+        battles[row['war'][i]].append({
+            'name': row['name'][i],
+            'winner': 'Empate' if row['winner'] == 'draw' else row['attacker'][i] if row['winner'][i] == 'attacker' else row['defender'][i],
+            'attacker': row['attacker'][i],
+            'defender': row['defender'][i],
+            'location': row['locn'].title()
+        })
+    return battles
+
+
+gdf['data'] = gdf.apply(get_battles, axis=1)
+gdf = gdf.drop(columns=['war', 'name', 'winner', 'attacker', 'defender'])
+gdf
 
 
 @app.callback(
-    [Output("historical_map", "figure"), Output("map-divider", "label")],
-    [Input("animation_state", "data")]
+    [Output("historical_map", "figure"), Output(
+        "map-divider", "label"), Output('map-data', 'data')],
+    [Input("animation_state", "data")],
 )
 def get_map(state):
     current_year = state['current_year']
-    df_year = gdf
     df_year = gdf[gdf['year'] ==
                   current_year] if current_year is not None else df[df['Year'] == _years[0]]
     fig = go.Figure(go.Scattermapbox(
@@ -78,9 +67,11 @@ def get_map(state):
         lon=df_year['lon'],
         mode='markers',
         hoverinfo='text',
-        hovertext=df_year['attacker_defender'] + '<br>' + 'Número de batallas: '+ df_year['count'].astype(str),
+        hovertext=df_year['attacker_defender'] + '<br>' +
+        'Lugar: ' + df_year['locn'].astype(str) + '<br >' +
+        'Número de batallas: ' + df_year['count'].astype(str),
         marker=go.scattermapbox.Marker(
-            size=10, # df_year['count'],
+            size=10,  # df_year['count'],
             color='white',
             symbol="marker",
             allowoverlap=True,
@@ -97,7 +88,10 @@ def get_map(state):
         showlegend=False,
     )
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-    return [fig, f"Año {current_year}" if current_year is not None else None]
+    return [fig, f"Año {current_year}" if current_year is not None else None, {
+        'year': current_year,
+        'battles': df_year['data'].to_list()
+    }]
 
 
 @app.callback(

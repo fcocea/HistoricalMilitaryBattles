@@ -6,6 +6,7 @@ import map
 import deaths
 import troops
 import opponent
+import map_explanation
 
 __years = [{"value": year, "label": year}
            for year in range(1600, 1974, 50)] + [{"value": 1973, "label": 1973}]
@@ -25,11 +26,10 @@ def get_layout():
                     'frame': {'redraw': True}}, config={'displayModeBar': False, 'scrollZoom': False}, style={'width': '100%', "height": "650px"}),
                 dmc.Divider(orientation="vertical", style={
                             "height": "650px", 'margin-left': 'auto'}),
-                dmc.Flex([
-                    dmc.Text("Año 1600", id="map-year", size="sm"),
-                ], direction="column", gap="xs", w="30%")
-
-            ], w="100%", gap="lg"),
+                dcc.Store(id='map-data', data=None),
+                html.Div(id='map-explanation',
+                         style={"min-width": '25%', 'width': '25%', 'height': '100%'})
+            ], w="100%", gap="lg", h='650px'),
             dmc.Flex([
                 dmc.ActionIcon(
                     DashIconify(
@@ -52,7 +52,7 @@ def get_layout():
                     max=1973,
                     min=1600,
                     mb=35,
-                    minRange=25,
+                    minRange=100,
                     labelAlwaysOn=True,
                     value=[1600, 1973]
                 ),
