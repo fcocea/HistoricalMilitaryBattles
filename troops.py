@@ -5,9 +5,8 @@ from dash import Output, Input
 import plotly.graph_objects as go
 
 troops = pd.read_csv('data/battles_clean.csv')
-# troops = troops[['isqno', 'date_start','attacker', 'defender','soldiers','tanks','artillery','aircraft','cavalry']]
 troops = troops[['isqno', 'date_start', 'attacker',
-                 'defender', 'tanks', 'artillery', 'cavalry', 'aircraft']]
+                 'defender','a_aircraft', 'a_artillery', 'a_cavalry', 'a_tanks', 'd_aircraft', 'd_artillery', 'd_cavalry','d_tanks']]
 countries = troops['attacker'].unique()
 countries = np.append(countries, troops['defender'].unique())
 countries = np.unique(countries)
@@ -19,15 +18,22 @@ countries = np.unique(countries)
     [Input('country-dropdown', 'value')]
 )
 def update_battle_troops(selected_country):
-    # Supongamos que tienes un DataFrame llamado 'troops'
+    isAttacker = False
+    if (troops['attacker'] == selected_country):
+        isAttacker = True
     filtered_troops = troops[(troops['attacker'] == selected_country) | (
         troops['defender'] == selected_country)].copy()
-    filtered_troops.drop(
-        columns=['attacker', 'defender', 'date_start', 'isqno'], inplace=True)
+    if isAttacker:
+        filtered_troops.drop(
+        columns=['attacker', 'defender', 'date_start', 'isqno', 'd_tanks', 'd_artillery', 'd_cavalry', 'd_aircraft'], inplace=True)
+        filtered_troops.rename(columns={'a_tanks': 'tanks', 'a_artillery': 'artillery', 'a_cavalry': 'cavalry', 'a_aircraft': 'aircraft'}, inplace=True)
+    else:
+        filtered_troops.drop(
+            columns=['attacker', 'defender', 'date_start', 'isqno', 'a_tanks', 'a_artillery', 'a_cavalry', 'a_aircraft'], inplace=True)
+        filtered_troops.rename(columns={'d_tanks': 'tanks', 'd_artillery': 'artillery', 'd_cavalry': 'cavalry', 'd_aircraft': 'aircraft'}, inplace=True)
     filtered_troops = filtered_troops.transpose()
     filtered_troops['Total'] = filtered_troops.sum(axis=1)
     filtered_troops = filtered_troops[['Total']]
-
     total_values = sum(filtered_troops['Total'])
     category_proportions = {category: float(
         value) / total_values for category, value in zip(filtered_troops.index, filtered_troops['Total'])}
