@@ -24,7 +24,7 @@ poetry install
 ```
 3. Lanzar el dashboard (Poetry)
 ```bash
-poetry run python3 run app.py
+poetry run python3 app.py
 ```
 
 ---
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 ```
 3. Lanzar el dashboard
 ```bash
-python3 run app.py
+python3 app.py
 ```
 ---
 
