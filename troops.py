@@ -183,14 +183,14 @@ def update_battle_troops(selected_country, selected_contrincante=None):
         fig.add_trace(fig_attacker)
 
         # Añadir el waffle chart del defensor con un desplazamiento de y=-11 (ajuste según la necesidad)
-        fig_defender = create_waffle_chart(troops_defender, 10, 40, categories, colorscale, selected_contrincante, y_offset=-11)
+        fig_defender = create_waffle_chart(troops_defender, 10, 40, categories, colorscale, selected_contrincante, y_offset=-12)
         fig.add_trace(fig_defender)
         fig.add_annotation(
             x=0.5, y=0.5, xref='paper', yref='paper',
             showarrow=False, text=f"{selected_country}", font=dict(size=14, color='black'), bgcolor='rgba(255,255,255,0.8)')
 
         fig.add_annotation(
-            x=0.5, y=1.03, xref='paper', yref='paper',
+            x=0.5, y=1.07, xref='paper', yref='paper',
             showarrow=False, text=f"{selected_contrincante}", font=dict(size=14, color='black'), bgcolor='rgba(255,255,255,0.8)')
 
         for category in categories:
@@ -201,14 +201,14 @@ def update_battle_troops(selected_country, selected_contrincante=None):
                 marker=dict(size=12, color=color_map[category]),
                 legendgroup=category,
                 showlegend=True,
-                name=translate_troop[category]
+                name=translate_troop[category],
             ))
 
         fig.update_layout(
             legend=dict(
                 orientation='h',
                 yanchor='bottom',
-                y=1.02,
+                y=1.1,
                 xanchor='center',
                 x=0.5
             ),
