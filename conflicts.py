@@ -6,46 +6,55 @@ from dash_manager import app
 from dash import Output, Input
 
 battles = pd.read_csv('data/battles_clean.csv')
-conflicts = battles[['isqno', 'attacker', 'defender']]
-conflicts = conflicts.groupby(['attacker', 'defender']).count()
-conflicts = conflicts.rename(columns={'isqno': 'count'})
-conflicts = conflicts.sort_values('count', ascending=False)
-conflicts = conflicts.reset_index()
-# countries sin repetir
-countries = pd.concat([conflicts['attacker'], conflicts['defender']]).unique()
-# ordenar por nombre
-countries = np.sort(countries)
 
-df_results = pd.DataFrame(columns=['country', 'won', 'lost', 'draws'])
-df_results['country'] = countries
+battles['year'] = battles['date_start'].str.extract(r'(\d{4})')
+battles['year'] = battles['year'].astype(int)
 
-# ver si los paises de df_results estan en una fila de battles y si ganaron o perdieron, si son attacker y winner
-# is attacker won +1, si son defender y winner is defender +1 si es attacker o defender y winner es otro lost +1
 
-for index, row in df_results.iterrows():
-    country = row['country']
-    won = 0
-    lost = 0
-    draws = 0
-    for index, row in battles.iterrows():
-        if row['attacker'] == country:
-            if row['winner'] == 'attacker':
-                won += 1
-            elif row['winner'] == 'defender':
-                lost += 1
-            else:
-                draws += 1
-        elif row['defender'] == country:
-            if row['winner'] == 'defender':
-                won += 1
-            elif row['winner'] == 'attacker':
-                lost += 1
-            else:
-                draws += 1
+def get_results(range_value=[1600, 1973]):
+    filtered_battles = battles[(battles['year'] >= range_value[0]) & (
+        battles['year'] <= range_value[1])]
+    conflicts = filtered_battles[['isqno', 'attacker', 'defender']]
+    conflicts = conflicts.groupby(['attacker', 'defender']).count()
+    conflicts = conflicts.rename(columns={'isqno': 'count'})
+    conflicts = conflicts.sort_values('count', ascending=False)
+    conflicts = conflicts.reset_index()
+    # countries sin repetir
+    countries = pd.concat(
+        [conflicts['attacker'], conflicts['defender']]).unique()
+    # ordenar por nombre
+    countries = np.sort(countries)
 
-    df_results.loc[df_results['country'] == country, 'won'] = won
-    df_results.loc[df_results['country'] == country, 'lost'] = lost
-    df_results.loc[df_results['country'] == country, 'draws'] = draws
+    df_results = pd.DataFrame(columns=['country', 'won', 'lost', 'draws'])
+    df_results['country'] = countries
+    # ver si los paises de df_results estan en una fila de battles y si ganaron o perdieron, si son attacker y winner
+    # is attacker won +1, si son defender y winner is defender +1 si es attacker o defender y winner es otro lost +1
+
+    for index, row in df_results.iterrows():
+        country = row['country']
+        won = 0
+        lost = 0
+        draws = 0
+        for index, row in filtered_battles.iterrows():
+            if row['attacker'] == country:
+                if row['winner'] == 'attacker':
+                    won += 1
+                elif row['winner'] == 'defender':
+                    lost += 1
+                else:
+                    draws += 1
+            elif row['defender'] == country:
+                if row['winner'] == 'defender':
+                    won += 1
+                elif row['winner'] == 'attacker':
+                    lost += 1
+                else:
+                    draws += 1
+
+        df_results.loc[df_results['country'] == country, 'won'] = won
+        df_results.loc[df_results['country'] == country, 'lost'] = lost
+        df_results.loc[df_results['country'] == country, 'draws'] = draws
+    return df_results
 
 
 @app.callback(
@@ -56,12 +65,18 @@ for index, row in df_results.iterrows():
      Output('graph-subtitle', 'children'),
      Output('pie-chart-subtitle', 'children')],
     [Input('country-dropdown', 'value'),
-     Input('contrincante-dropdown', 'value')]
+     Input('contrincante-dropdown', 'value'), Input('range-slider', 'value')]
 )
-def update_graph(selected_country, selected_contrincante=None):
+def update_graph(selected_country, selected_contrincante=None, range_value=[1600, 1973]):
     colors = ['#3399FF', '#DC143C', '#808080']
     if selected_contrincante is None:
-        # Gráfico de barras para ataques y defensas
+        filtered_battles = battles[(battles['year'] >= range_value[0]) & (
+            battles['year'] <= range_value[1])]
+        conflicts = filtered_battles[['isqno', 'attacker', 'defender']]
+        conflicts = conflicts.groupby(['attacker', 'defender']).count()
+        conflicts = conflicts.rename(columns={'isqno': 'count'})
+        conflicts = conflicts.sort_values('count', ascending=False)
+        conflicts = conflicts.reset_index()
         df_attacks = conflicts[conflicts['defender'] == selected_country]
         df_defenses = conflicts[conflicts['attacker'] == selected_country]
 
@@ -115,8 +130,9 @@ def update_graph(selected_country, selected_contrincante=None):
             'paper_bgcolor': 'rgba(0, 0, 0, 0)',
         })
         fig.update_traces(hoverinfo='skip')
-
-        df_selected = df_results[df_results['country'] == selected_country]
+        results = get_results(range_value)
+        print(results)
+        df_selected = results[results['country'] == selected_country]
         pie_fig = go.Figure(data=[go.Pie(
             labels=[
                 f"Ganadas: {df_selected['won'].values[0]}",
@@ -143,15 +159,18 @@ def update_graph(selected_country, selected_contrincante=None):
             'paper_bgcolor': 'rgba(0, 0, 0, 0)',
         })
 
-        fig_title = f'Conflictos que involucran a {selected_country}'
-        pie_title = f'Resultados de Batallas para {selected_country}'
+        fig_title = f'Conflictos que involucran a {selected_country}, entre {range_value[0]} y {range_value[1]}'
+        pie_title = f'Resultados de Batallas para {selected_country}, entre {range_value[0]} y {range_value[1]}'
         fig_subtitle = f'Se muestra las batallas en las que {selected_country} ha estado involucrado. El color azul representa el número de veces que {selected_country} se defendió de ataques de otros países, mientras que el color rojo indica las ocasiones en que atacó a esos países.'
         pie_subtitle = f''
         return [fig, pie_fig, fig_title, pie_title, fig_subtitle, pie_subtitle]
     else:
-        battles = pd.read_csv('data/battles_clean.csv')
-        df_conflicts = battles[['isqno', 'attacker', 'defender', 'winner']]
+        df_conflicts = battles[['isqno', 'attacker',
+                                'defender', 'winner', 'year']]
         df_conflicts = df_conflicts.set_index(['isqno'])
+
+        df_conflicts = df_conflicts[(df_conflicts['year'] >= range_value[0]) & (
+            df_conflicts['year'] <= range_value[1])]
 
         country1 = selected_country
         df_conflicts = df_conflicts[(df_conflicts['attacker'] == country1) | (
@@ -266,8 +285,8 @@ def update_graph(selected_country, selected_contrincante=None):
             'plot_bgcolor': 'rgba(0, 0, 0, 0)',
             'paper_bgcolor': 'rgba(0, 0, 0, 0)',
         })
-        fig_title = f'Conflictos que involucran a {selected_country} contra {selected_contrincante}'
-        pie_title = f'Resultados de Batallas para {selected_country} contra {selected_contrincante}'
+        fig_title = f'Conflictos que involucran a {selected_country} contra {selected_contrincante}, entre {range_value[0]} y {range_value[1]}'
+        pie_title = f'Resultados de Batallas para {selected_country} contra {selected_contrincante}, entre {range_value[0]} y {range_value[1]}'
         fig_subtitle = f'Se muestra las batallas en las que {selected_country} ha estado involucrado contra {selected_contrincante}. El color azul representa el número de veces que {selected_country} se defendió de ataques de {selected_contrincante}, mientras que el color rojo indica las ocasiones en que lo atacó.'
         pie_subtitle = f''
         return [fig, pie_fig, fig_title, pie_title, fig_subtitle, pie_subtitle]

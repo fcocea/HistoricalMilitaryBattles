@@ -51,6 +51,10 @@ def create_waffle_chart(data, height, width, categories, colorscale, selected_co
 
 
 battles = pd.read_csv('data/battles_clean.csv')
+
+battles['year'] = battles['date_start'].str.extract(r'(\d{4})')
+battles['year'] = battles['year'].astype(int)
+
 df_belligerents = pd.read_csv('data/belligerents.csv')
 
 
@@ -58,12 +62,15 @@ df_belligerents = pd.read_csv('data/belligerents.csv')
     [Output('battle-troops', 'figure'),
      Output('battle-troops-title', 'children')],
     [Input('country-dropdown', 'value'),
-     Input('contrincante-dropdown', 'value')]
+     Input('contrincante-dropdown', 'value'), Input('range-slider', 'value')]
 )
-def update_battle_troops(selected_country, selected_contrincante=None):
+def update_battle_troops(selected_country, selected_contrincante=None, range_value=[1600, 1973]):
+    start, end = range_value
+    year_filter = battles[(battles['year'] >= start)
+                          & (battles['year'] <= end)]
     if selected_contrincante is None:
-        troops = battles[((battles['attacker'] == selected_country) | (
-            battles['defender'] == selected_country))]
+        troops = year_filter[((year_filter['attacker'] == selected_country) | (
+            year_filter['defender'] == selected_country))]
         troops = troops[['isqno', 'attacker', 'defender', 'date_start']]
         troops['date_start'] = pd.to_datetime(troops['date_start'])
         troops = troops.merge(df_belligerents, on='isqno')
@@ -135,10 +142,10 @@ def update_battle_troops(selected_country, selected_contrincante=None):
             plot_bgcolor='rgba(0,0,0,0)',
         )
 
-        return [fig, f'Proporción de tropas en batallas que involucran a {selected_country}']
+        return [fig, f'Proporción de tropas en batallas que involucran a {selected_country}, entre {start} y {end}']
     else:
-        troops = battles[((battles['attacker'] == selected_country) & (battles['defender'] == selected_contrincante)) |
-                         ((battles['attacker'] == selected_contrincante) & (battles['defender'] == selected_country))]
+        troops = year_filter[((year_filter['attacker'] == selected_country) & (year_filter['defender'] == selected_contrincante)) |
+                             ((year_filter['attacker'] == selected_contrincante) & (year_filter['defender'] == selected_country))]
         troops = troops[['isqno', 'attacker', 'defender', 'date_start']]
         troops['date_start'] = pd.to_datetime(troops['date_start'])
         troops = troops.merge(df_belligerents, on='isqno')
@@ -236,4 +243,4 @@ def update_battle_troops(selected_country, selected_contrincante=None):
             plot_bgcolor='rgba(0,0,0,0)',
         )
 
-        return [fig, f'Proporción de tropas en las batallas de {selected_country} contra {selected_contrincante}']
+        return [fig, f'Proporción de tropas en las batallas de {selected_country} contra {selected_contrincante}, entre {start} y {end}']

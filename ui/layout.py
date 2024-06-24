@@ -1,6 +1,6 @@
 from dash import html, dcc
 import dash_mantine_components as dmc
-from conflicts import countries
+import conflicts
 from dash_iconify import DashIconify
 import map
 import deaths
@@ -47,7 +47,7 @@ def get_layout():
         dmc.Flex(
             [
                 dmc.RangeSlider(
-                    id="range-slider-callback",
+                    id="range-slider",
                     marks=__years,
                     max=1973,
                     min=1600,
@@ -60,7 +60,7 @@ def get_layout():
                     [
                         dmc.Select(
                             id='country-dropdown',
-                            data=countries,
+                            data=None,
                             searchable=True,
                             value='Alemania',
                             allowDeselect=False,
@@ -68,6 +68,7 @@ def get_layout():
                             label="País",
 
                         ),
+                        dcc.Store(id='country-store', data='Alemania'),
                         dmc.Select(
                             id='contrincante-dropdown',
                             disabled=True,
@@ -75,8 +76,10 @@ def get_layout():
                             clearable=True,
                             placeholder="Seleccione un contrincante para analizar",
                             w="100%",
-                            label="Contrincante"
+                            label="Contrincante",
                         ),
+                        dcc.Store(id='opponent-list-store', data=None),
+                        dcc.Store(id='opponent-store', data=None),
                     ], direction={"base": "column", "md": "row"}, gap={"base": "xs", "md": "lg"}
                 )
             ], direction="column", gap="sm", w="100%"
@@ -88,7 +91,7 @@ def get_layout():
                         dmc.Group(
                             children=[
                                 dmc.Text(
-                                    "Conflictos que involucran a Alemania", fw=500, id='graph-title'),
+                                    "Conflictos que involucran a Alemania, entre 1600 y 1973", fw=500, id='graph-title'),
                                 dmc.ActionIcon(
                                     DashIconify(
                                         icon="carbon:overflow-menu-horizontal"),
@@ -121,7 +124,7 @@ def get_layout():
                         dmc.Group(
                             children=[
                                 dmc.Text(
-                                    "Resultados de Batallas para Alemania", fw=500, id='pie-chart-title'),
+                                    "Resultados de Batallas para Alemania, entre 1600 y 1973", fw=500, id='pie-chart-title'),
                                 dmc.ActionIcon(
                                     DashIconify(
                                         icon="carbon:overflow-menu-horizontal"),
@@ -156,7 +159,7 @@ def get_layout():
                     dmc.Group(
                         children=[
                             dmc.Text(
-                                "Distribución de las muertes en batalla que involucran a Alemania", fw=500, id='boxplot-deaths-title'),
+                                "Distribución de las muertes en batalla que involucran a Alemania, entre 1600 y 1973", fw=500, id='boxplot-deaths-title'),
                             dmc.ActionIcon(
                                 DashIconify(
                                     icon="carbon:overflow-menu-horizontal"),
@@ -182,7 +185,7 @@ def get_layout():
                     dmc.Group(
                         children=[
                             dmc.Text(
-                                "Waffle Chart de Alemania", fw=500, id='battle-troops-title'),
+                                "Proporción de tropas en batallas que involucran a Alemania, entre 1600 y 1973", fw=500, id='battle-troops-title'),
                             dmc.ActionIcon(
                                 DashIconify(
                                     icon="carbon:overflow-menu-horizontal"),
