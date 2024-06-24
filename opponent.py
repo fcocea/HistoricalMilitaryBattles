@@ -15,7 +15,6 @@ battles['year'] = battles['year'].astype(int)
 )
 def update_countries(value, country):
     start, end = value
-    print(country)
     year_filter = battles[(battles['year'] >= start)
                           & (battles['year'] <= end)]
     attacker_countries = year_filter['attacker'].unique()

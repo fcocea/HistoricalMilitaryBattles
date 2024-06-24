@@ -131,7 +131,6 @@ def update_graph(selected_country, selected_contrincante=None, range_value=[1600
         })
         fig.update_traces(hoverinfo='skip')
         results = get_results(range_value)
-        print(results)
         df_selected = results[results['country'] == selected_country]
         pie_fig = go.Figure(data=[go.Pie(
             labels=[
