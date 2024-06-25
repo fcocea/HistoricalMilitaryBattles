@@ -4,3 +4,7 @@
     flex-direction: column;
     position: relative;
 }
+
+.no-show {
+    display: none
+}

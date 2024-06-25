@@ -25,10 +25,10 @@ def get_layout():
                 dcc.Graph(id='historical_map', animate=True, animation_options={
                     'frame': {'redraw': True}}, config={'displayModeBar': False, 'scrollZoom': False}, style={'width': '100%', "height": "650px"}),
                 dmc.Divider(orientation="vertical", style={
-                            "height": "650px", 'margin-left': 'auto'}),
+                            "height": "650px", 'marginLeft': 'auto'}),
                 dcc.Store(id='map-data', data=None),
                 html.Div(id='map-explanation',
-                         style={"min-width": '25%', 'width': '25%', 'height': '100%'})
+                         style={"minWidth": '25%', 'width': '25%', 'height': '100%'})
             ], w="100%", gap="lg", h='650px'),
             dmc.Flex([
                 dmc.ActionIcon(
@@ -199,7 +199,19 @@ def get_layout():
                     inheritPadding=True,
                     py="xs",
                 ),
-                dcc.Graph(id='battle-troops', config={'displayModeBar': False})
+                dmc.Flex([
+                    dmc.Alert(
+                        "No se encontraron datos relacionados con las tropas en batallas que involucran a Alemania, entre 1600 y 1973",
+                        title="¡Advertencia!",
+                        id="alert-troops",
+                        color="red",
+                        mt='auto',
+                        mb='auto',
+                        className="no-show"
+                    ),
+                    dcc.Graph(id='battle-troops',
+                              config={'displayModeBar': False}, className="no-show")
+                ], direction="column", pt='xs', h='100%')
             ], withBorder=True,
                 shadow="sm",
                 radius="md",

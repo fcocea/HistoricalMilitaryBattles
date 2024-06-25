@@ -60,7 +60,7 @@ df_belligerents = pd.read_csv('data/belligerents.csv')
 
 @app.callback(
     [Output('battle-troops', 'figure'),
-     Output('battle-troops-title', 'children')],
+     Output('battle-troops-title', 'children'), Output('battle-troops', 'className'), Output('alert-troops', 'className'), Output('alert-troops', 'children')],
     [Input('country-dropdown', 'value'),
      Input('contrincante-dropdown', 'value'), Input('range-slider', 'value')]
 )
@@ -115,8 +115,11 @@ def update_battle_troops(selected_country, selected_contrincante=None, range_val
             'tanks': 'Tanques'
         }
         fig = go.Figure()
-        fig_country = create_waffle_chart(
-            troops, 20, 30, categories, colorscale, selected_country, y_offset=0)
+        try:
+            fig_country = create_waffle_chart(
+                troops, 20, 30, categories, colorscale, selected_country, y_offset=0)
+        except:
+            return [None, f'Proporción de tropas en batallas que involucran a {selected_country}, entre {start} y {end}', 'no-show', '', f'No se encontraron datos relacionados con las tropas en batallas que involucran a {selected_country}, entre {start} y {end}']
         fig.add_trace(fig_country)
         for category in categories:
             fig.add_trace(go.Scatter(
@@ -142,7 +145,7 @@ def update_battle_troops(selected_country, selected_contrincante=None, range_val
             plot_bgcolor='rgba(0,0,0,0)',
         )
 
-        return [fig, f'Proporción de tropas en batallas que involucran a {selected_country}, entre {start} y {end}']
+        return [fig, f'Proporción de tropas en batallas que involucran a {selected_country}, entre {start} y {end}', '', 'no-show', '']
     else:
         troops = year_filter[((year_filter['attacker'] == selected_country) & (year_filter['defender'] == selected_contrincante)) |
                              ((year_filter['attacker'] == selected_contrincante) & (year_filter['defender'] == selected_country))]
@@ -202,14 +205,19 @@ def update_battle_troops(selected_country, selected_contrincante=None, range_val
         fig = go.Figure()
 
         # Añadir el waffle chart del atacante con un desplazamiento de y=0
-        fig_attacker = create_waffle_chart(
-            troops_attacker, 10, 40, categories, colorscale, selected_country, y_offset=0)
-        fig.add_trace(fig_attacker)
+        try:
+            fig_attacker = create_waffle_chart(
+                troops_attacker, 10, 40, categories, colorscale, selected_country, y_offset=0)
+            fig.add_trace(fig_attacker)
 
-        # Añadir el waffle chart del defensor con un desplazamiento de y=-11 (ajuste según la necesidad)
-        fig_defender = create_waffle_chart(
-            troops_defender, 10, 40, categories, colorscale, selected_contrincante, y_offset=-12)
-        fig.add_trace(fig_defender)
+            # Añadir el waffle chart del defensor con un desplazamiento de y=-11 (ajuste según la necesidad)
+            fig_defender = create_waffle_chart(
+                troops_defender, 10, 40, categories, colorscale, selected_contrincante, y_offset=-12)
+
+            fig.add_trace(fig_defender)
+        except:
+            return [None,
+                    f'Proporción de tropas en las batallas de {selected_country} contra {selected_contrincante}, entre {start} y {end}', 'no-show', '', f'No se encontraron datos relacionados con las tropas en batallas que involucran a {selected_country} y {selected_contrincante}, entre {start} y {end}']
         fig.add_annotation(
             x=0.5, y=0.5, xref='paper', yref='paper',
             showarrow=False, text=f"{selected_country}", font=dict(size=14, color='black'), bgcolor='rgba(255,255,255,0.8)')
@@ -243,4 +251,4 @@ def update_battle_troops(selected_country, selected_contrincante=None, range_val
             plot_bgcolor='rgba(0,0,0,0)',
         )
 
-        return [fig, f'Proporción de tropas en las batallas de {selected_country} contra {selected_contrincante}, entre {start} y {end}']
+        return [fig, f'Proporción de tropas en las batallas de {selected_country} contra {selected_contrincante}, entre {start} y {end}', '', 'no-show', '']
