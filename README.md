@@ -47,6 +47,14 @@ pip install -r requirements.txt
 python3 app.py
 ```
 ---
+4. El dashboard estará disponible en la dirección [http:// localhost:8050](http://localhost:8050)
+
+En caso de un error en el lanzamiento, establece la siguiente variable de entorno:
+```bash
+export REACT_VERSION=18.2.0
+```
+y vuelve a lanzar el dashboard.
+
 
 #### Créditos
 Proyecto realizado por:
